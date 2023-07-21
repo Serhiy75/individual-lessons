@@ -459,3 +459,15 @@ const photos = [
 ];
 
 // ========================
+
+const userPhotos = document.querySelector('.js-image-list');
+
+function createMarkup(photos) {
+  const markup = photos.map(({ id, title, url, thumbnailUrl }) => {
+    return `
+   <img src="${url}" alt="${title}" data-id="${id}"> `
+  }).join('');
+
+  userPhotos.innerHTML = markup;
+}
+createMarkup(photos);

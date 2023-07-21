@@ -615,11 +615,27 @@ const posts = [
     email: 'Jovanny@abigale.ca',
     body: 'laudantium corrupti atque exercitationem quae enim et veniam dicta\nautem perspiciatis sit dolores\nminima consectetur tenetur iste facere\namet est neque',
   },
-  {
-    postId: 18,
-    id: 89,
-    name: 'in voluptatum nostrum voluptas iure nisi rerum est placeat',
-    email: 'Isac_Schmeler@barton.com',
-    body: 'quibusdam rerum quia nostrum culpa\nculpa est natus impedit quo rem voluptate quos\nrerum culpa aut ut consectetur\nsunt esse laudantium voluptatibus cupiditate rerum',
-  },
+ 
 ];
+
+const userPost = document.querySelector('.js-table-comments');
+
+function createMarkup(posts) {
+  
+  const markup = posts.map(({ id, name, email, body }, idx) => {
+    let myClass = '';
+    if (idx % 2 === 0) {
+      console.log(+id % 2 === 0);
+      myClass = 'active'
+    }
+    return `
+   <li class="box ${myClass}" data-id="${id}">
+          <h3>${name}</h3>
+          <p>${body}</p>
+          <a href="#" >${email}</a>
+        </li> `
+  }).join('');
+  userPost.innerHTML = markup;
+}
+
+createMarkup(posts)

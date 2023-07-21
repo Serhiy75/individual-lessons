@@ -22,9 +22,7 @@ table, th, td {
     border: 1px solid;
 }
 
-.active{
-    border:5px solid tomato;
-}
+
 
 .image-list{
     display:flex;
@@ -36,4 +34,39 @@ table, th, td {
 
 * {
     box-sizing: border-box;
+}
+.user {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    /* height: 100%; */
+    padding: 30px;
+    margin: 30px;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.user>* {
+    margin: 10px;
+}
+.box {
+    list-style-type: none;
+    padding: 10px;
+    margin: 10px;
+    height: 250px;
+    width: 300px;
+    border: 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+}
+
+.box>p {
+    max-height: 250px;
+    overflow-y: auto;
+}
+.active {
+    border: 5px solid tomato;
 }

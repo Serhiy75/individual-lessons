@@ -232,3 +232,31 @@ const users = [
   },
 ];
 // ====================
+const userElem = document.querySelector('.js-table-users');
+
+function createMarkup() {
+  const markup = users.map((user) => {
+    return `
+      <li class="user" data-id="10">
+            <h3>${user.name}</h3>
+          <h4>${user.username}</h4>
+          <a href="">email:${user.email}</a>
+         <div>
+          address: <br>
+          street: ${user.address.street}<br>
+          suite: ${user.address.suite}<br>
+          city: ${user.address.city}<br>
+         </div>
+         <div>
+          phone: ${user.phone}<br>
+          website: ${user.website}<br>
+          company name: ${user.company.name}
+          
+         </div>
+          
+      </li>`
+  }).join('');
+  userElem.innerHTML = markup;
+}
+createMarkup()
+

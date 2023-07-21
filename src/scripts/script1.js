@@ -80,3 +80,34 @@ const cars = [
     onSale: false,
   },
 ];
+
+const carsElem = document.querySelector('.js-table-cars').lastElementChild;
+
+function createMarkup(cars) {
+  const markup = cars.map(({ make, model, type, amount, price, onSale }) => {
+    return ` <tr>
+          <td>${make}</td>
+          <td>${model}</td>
+          <td>${type}</td>
+          <td>${amount}</td>
+          <td>${price}</td>
+          <td data-onsale="${onSale}">${onSale}</td>
+        </tr>`
+  }).join('');
+
+  carsElem.innerHTML = markup;
+}
+createMarkup(cars);
+
+function countCars() {
+  const result = carsElem.querySelectorAll('[data-onsale = "true" ]')
+  
+  const carInfoElem = document.querySelector('.js-cars-onsale');
+  carInfoElem.innerHTML = `кільсть авто на продаж ${result.length}`;
+  const result1 = carsElem.querySelectorAll('[data-onsale = "false" ]');
+  const carInfoElem1 = document.querySelector('.js-cars-notavailable');
+  carInfoElem1.innerHTML = `кільсть авто відсутніх для продажу ${result1.length}`;
+}
+countCars();
+
+
