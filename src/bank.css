@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  div {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: inline-block;
+    width: 80px;
+  }
+
+  input[type="number"] {
+    width: 150px;
+    padding: 5px;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+
+  #balanceDisplay {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .transaction-item{
+    border:1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    margin:10px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .transaction-item>*{
+    margin: 0;
+  }
+
+  .deposit{
+    border:1px solid #08900e;
+    background-color: #08900f39;
+  }
+  .withdraw{
+    border:1px solid rgb(255, 115, 115);
+    background-color: rgba(255, 115, 115, 0.269); 
+  }
+
+  .box{
+    border: 1px solid black;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+  }
