@@ -10,18 +10,18 @@
   </head>
   <body>
     <h1>Bank Account</h1>
-    <div class="box">
+    <form class="box">
       <div>
         <label for="depositAmount">Депозит:</label>
-        <input type="number" id="depositAmount" min="0" />
-        <button>Внести</button>
+        <input type="number" name="depositAmount" min="0" />
+        <button type="submit" data-type="deposit">Внести</button>
       </div>
       <div>
         <label for="withdrawAmount">Снять:</label>
-        <input type="number" id="withdrawAmount" min="0" />
-        <button>Снять</button>
+        <input type="number" name="withdrawAmount" min="0" />
+        <button type="submit" data-type="withdraw">Снять</button>
       </div>
-    </div>
+    </form>
 
     <div class="box">
       <div>
