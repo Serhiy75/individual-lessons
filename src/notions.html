@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./notion.css" />
+  </head>
+  <body>
+    <h1>Додати нову замітку</h1>
+    <form id="noteForm">
+      <label for="noteTitle">Заголовок:</label>
+      <input type="text" id="noteTitle" required />
+      <br />
+      <label for="noteContent">Вміст:</label>
+      <textarea id="noteContent" rows="4" cols="50" required></textarea>
+      <br />
+      <input type="submit" value="Додати замітку" />
+    </form>
+
+    <ul class="list">
+      <li class="item note box">
+        <h3>Заголовок замітки 1</h3>
+        <p>Текст замітки 1</p>
+      </li>
+      <li class="item note box">
+        <h3>Заголовок замітки 1</h3>
+        <p>Текст замітки 1</p>
+      </li>
+    </ul>
+    <script src="./scripts/notions.js"></script>
+  </body>
+</html>
