@@ -8,12 +8,49 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <div class="forms"></div>
+    <div class="forms fb">
+      <form class="js-dealership box" id="dealerForm">
+        <label for="make">МАРКА</label>
+        <input type="text" id="make" required />
+        <br />
+      
+        <label for="model">МОДЕЛЬ</label>
+        <input type="text" id="model" required />
+        <br />
 
-    <div class="info">
-      <ul class="customers"></ul>
+        <label for="year">РІК :</label>
+        <input type="date" id="year" required />
+        <br />
+      
+        <label for="price">ЦІНА $</label>
+        <input type="number" id="price" required></>
+        <br />
+      
+        <button type="submit">ПІДТВЕРДИТИ</button>
+      </form>
 
-      <ul class="cars"></ul>
+      <form class="js-customers box" id="dealerForm">
+        <label for="name">ІМЯ</label>
+        <input type="text" id="name" required />
+        <br />
+      
+        <button type="submit">ПІДТВЕРДИТИ</button>
+      </form>
+    </div>
+
+    <div class="info fb">
+      <ul class="customers">
+        <li class="box">name</li>
+      </ul>
+
+      <ul class="cars">
+        <li class="box">
+          <h3 class="box">make</h3>
+          <h4 class="box">model</h4>
+          <p class="box">year</p>
+          <p class="box">price</p>
+        </li>
+      </ul>
     </div>
     <script src="./scripts/cars.js"></script>
   </body>

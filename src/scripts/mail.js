@@ -28,3 +28,43 @@ class Mailbox {
     });
   }
 }
+const mailbox = new Mailbox();
+
+const userForm = document.querySelector('.js-form');
+userForm.addEventListener('submit', onUserformSubmit);
+userForm.addEventListener('focus', onFocus);
+userForm.addEventListener('blur', onBlur);
+
+function onFocus(evt) {
+  console.log(evt);
+};
+
+function onBlur(evt) {
+console.log(evt);
+};
+
+function onUserformSubmit(evt) {
+  evt.preventDefault();
+  let textRecipient = userForm.elements.recipient.value;
+  let textSubject = userForm.elements.subject.value;
+  let textBody = userForm.elements.body.value;
+  mailbox.sendMessage(textRecipient, textSubject, textBody);
+  renderMasseges(mailbox.sentMessages);
+  
+}
+
+function renderMasseges(arreyMassege) {
+
+  const markup = arreyMassege.map(({ recipient, body, subject, date }) => {
+    return `
+     <li class="item">
+          <h3>${recipient}</h3>
+          <p>${body}</p>
+          <div>${subject}<span></span> <span>${date}</span></div>
+        </li>`
+  }).join('');
+
+  const ulLIst = document.querySelector('.list');
+  ulLIst.innerHTML = markup;
+
+};

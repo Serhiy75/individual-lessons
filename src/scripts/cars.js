@@ -70,3 +70,60 @@ class Customer {
     this.name = name;
   }
 }
+
+const carDealership = new CarDealership('name');
+
+
+const dealershipForm = document.querySelector('.js-dealership');
+dealershipForm.addEventListener('submit', onCarsDealerSubmit);
+
+
+function onCarsDealerSubmit(evt) {
+  evt.preventDefault();
+  let carMake = evt.target.elements.make.value;
+  let carModel = evt.target.elements.model.value;
+  let carYear = evt.target.elements.year.value;
+  let carPrice = evt.target.elements.price.value;
+  const car = new Car(carMake, carModel, carYear, carPrice);
+  carDealership.addCar(car);
+  renderCar(carDealership.cars); 
+};
+
+const userCars = document.querySelector('.cars');
+
+function renderCar(cars) {
+  const markup = cars.map(({make, model, year, price}) => {
+    return `
+    <li class="box">
+          <h3 class="box">${make}</h3>
+          <h4 class="box">${model}</h4>
+          <p class="box">${year}</p>
+          <p class="box">${price}</p>
+        </li> `
+  }).join('');
+  userCars.innerHTML = markup;
+};
+
+const customersForm = document.querySelector('.js-customers');
+customersForm.addEventListener('submit', onCustomerCarsSubmit);
+
+function onCustomerCarsSubmit(evt) {
+  evt.preventDefault();
+  let customerName = evt.target.elements.name.value;
+  carDealership.addCustomer(new Customer(customerName));
+  customerNameRender(carDealership.customers);
+};
+
+const customerCar = document.querySelector('.customers');
+
+function customerNameRender(arrey) {
+
+
+  const markup = arrey.map(({ name }) => {
+    return `
+    <li class="box">${name}</li>`
+  }).join('');
+  customerCar.innerHTML = markup;
+};
+
+
