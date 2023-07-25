@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./mail.css" />
+  </head>
+  <body>
+    <h1>Надіслати листа</h1>
+    <form id="mailForm">
+      <label for="recipient">Кому:</label>
+      <input type="email" id="recipient" required />
+      <br />
+
+      <label for="subject">Тема:</label>
+      <input type="text" id="subject" required />
+      <br />
+
+      <label for="body">Текст сообщения:</label>
+      <textarea id="body" rows="4" cols="50" required></textarea>
+      <br />
+
+      <button type="submit">Отправить</button>
+    </form>
+
+    <div class="box">
+      <ul class="list">
+        <li class="item">
+          <h3>ТЕМА</h3>
+          <p>BODY</p>
+          <div><span>SUBJECT</span> <span>DATA</span></div>
+        </li>
+
+        <li class="item">
+          <h3>ТЕМА</h3>
+          <p>BODY</p>
+          <div><span>SUBJECT</span> <span>DATA</span></div>
+        </li>
+
+        <li class="item">
+          <h3>ТЕМА</h3>
+          <p>BODY</p>
+          <div><span>SUBJECT</span> <span>DATA</span></div>
+        </li>
+
+        <li class="item">
+          <h3>ТЕМА</h3>
+          <p>BODY</p>
+          <div><span>SUBJECT</span> <span>DATA</span></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="backdrop">
+      <div class="modal user-modal"></div>
+    </div>
+    <script src="./scripts/mail.js"></script>
+  </body>
+</html>
