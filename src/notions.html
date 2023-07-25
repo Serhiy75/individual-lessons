@@ -20,7 +20,7 @@
       <input type="submit" value="Додати замітку" />
     </form>
 
-    <ul class="list">
+    <ul class="list js-list">
       <li class="item note box">
         <h3>Заголовок замітки 1</h3>
         <p>Текст замітки 1</p>
@@ -30,6 +30,13 @@
         <p>Текст замітки 1</p>
       </li>
     </ul>
+      <form id="textForm">
+        <label for="noteTitle">Заголовок:</label>
+        <input type="text" id="noteTitle" required />
+        <br />
+        <input type="submit" value="Видалити замітку" />
+      </form>
+    <button class="js-btn"> delite</button>
     <script src="./scripts/notions.js"></script>
   </body>
 </html>

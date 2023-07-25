@@ -23,23 +23,12 @@
       <br />
       <input type="submit" value="Додати користувача" />
     </form>
-
-    <ul class="list">
-      <li class="item user box">
-        <img class="user-image"
-          src="https://source.unsplash.com/500x500/?random=1&avatar,user,human,people"
-          alt="user"
-        />
-        <div>
-          <h3 class="user-name">Username</h3>
-          <p class="user-info">Email</p>
-        </div>
-        
-      </li>
-    </ul>
+    <input name="userName" type="email" class="js-input" required></textarea>
+    <ul class="list js-list"></ul>
+  
 
     <div class="backdrop">
-      <div class="modal user-modal">
+      <div class="modal user-modal js-modal">
         <div class="fb">
           <img class="user-image"
           src="https://source.unsplash.com/500x500/?random=1&avatar,user,human,people"
@@ -53,6 +42,7 @@
         <p>INFO</p>
       </div>
     </div>
-    <script src="./scripts/notions.js"></script>
+
+    <script src="./scripts/users.js"></script>
   </body>
 </html>
