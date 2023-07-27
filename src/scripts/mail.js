@@ -50,7 +50,11 @@ function onUserformSubmit(evt) {
   let textBody = userForm.elements.body.value;
   mailbox.sendMessage(textRecipient, textSubject, textBody);
   renderMasseges(mailbox.sentMessages);
-  
+  userForm.reset();
+  localStorage.removeItem('recipient');
+  localStorage.removeItem('subject');
+  localStorage.removeItem('body');
+  localStorage.setItem('mailBox', JSON.stringify(mailbox.sentMessages));
 }
 
 function renderMasseges(arreyMassege) {
@@ -68,3 +72,33 @@ function renderMasseges(arreyMassege) {
   ulLIst.innerHTML = markup;
 
 };
+
+userForm.addEventListener('input', onUserSaveInput);
+
+function onUserSaveInput(evt) {
+  let userValue = evt.target.value;
+  let userKey = evt.target.id;
+  localStorage.setItem(userKey, userValue);
+
+};
+
+
+
+function onLoad() {
+  let userRecipient = localStorage.getItem('recipient');
+  let userSubject = localStorage.getItem('subject');
+  let userBody = localStorage.getItem('body');
+
+   let textRecipient = userForm.elements.recipient;
+  let textSubject = userForm.elements.subject;
+  let textBody = userForm.elements.body;
+ 
+  textRecipient.value = userRecipient;
+  textSubject.value = userSubject;
+  textBody.value = userBody;
+
+  let arrayMessage = JSON.parse(localStorage.getItem('mailBox'));
+  mailbox.sentMessages = arrayMessage || [];
+  renderMasseges(mailbox.sentMessages);
+}
+onLoad();

@@ -87,6 +87,9 @@ function onCarsDealerSubmit(evt) {
   const car = new Car(carMake, carModel, carYear, carPrice);
   carDealership.addCar(car);
   renderCar(carDealership.cars); 
+  dealershipForm.reset();
+  localStorage.removeItem('cars');
+  localStorage.setItem('formCars', JSON.stringify(carDealership.cars));
 };
 
 const userCars = document.querySelector('.cars');
@@ -112,6 +115,9 @@ function onCustomerCarsSubmit(evt) {
   let customerName = evt.target.elements.name.value;
   carDealership.addCustomer(new Customer(customerName));
   customerNameRender(carDealership.customers);
+  localStorage.removeItem('customerName')
+  customersForm.reset()
+  localStorage.setItem('customerNames', JSON.stringify(carDealership.customers));
 };
 
 const customerCar = document.querySelector('.customers');
@@ -126,4 +132,43 @@ function customerNameRender(arrey) {
   customerCar.innerHTML = markup;
 };
 
+customersForm.addEventListener('input', onSaveCustomerInput);
 
+function onSaveCustomerInput(evt) {
+   let customerName = evt.target.value;
+  localStorage.setItem('customerName', customerName);
+  
+}
+function onLoad() {
+  let customerName = localStorage.getItem('customerName');
+  customersForm.elements.name.value = customerName;
+
+   let arrayName = JSON.parse(localStorage.getItem('customerNames'));
+  carDealership.customers = arrayName || [];
+  customerNameRender(carDealership.customers);
+
+  let arreyFormCars = JSON.parse(localStorage.getItem('formCars'));
+  carDealership.cars = arreyFormCars || [];
+  renderCar(carDealership.cars);
+  
+  let dealerCars = JSON.parse(localStorage.getItem('cars'));
+  dealershipForm.elements.make.value = dealerCars?.carMake || '';
+  dealershipForm.elements.model.value = dealerCars?.carModel || '';
+  dealershipForm.elements.year.value = dealerCars?.carYear || '';
+  dealershipForm.elements.price.value = dealerCars?.carPrice || '';
+
+}
+onLoad()
+
+dealershipForm.addEventListener('input', onCustomerCarsInput);
+
+function onCustomerCarsInput(evt) {
+  
+  let dealerCars = {
+  carMake: evt.currentTarget.elements.make.value,
+  carModel: evt.currentTarget.elements.model.value,
+  carYear: evt.currentTarget.elements.year.value,
+  carPrice: evt.currentTarget.elements.price.value
+  }
+  localStorage.setItem('cars', JSON.stringify(dealerCars));
+}
