@@ -59,6 +59,9 @@ function onFormSubmit(evt) {
   NoteManager1.addNote(title, content);
   renderNote(NoteManager1.notes);
   notionForm.reset();
+  localStorage.removeItem('NOTION_USER');
+  localStorage.setItem('NOTE_MENAGER', JSON.stringify(NoteManager1.notes));
+  
 }
 
 const listElem = document.querySelector('.js-list');
@@ -82,6 +85,7 @@ function onContentDelete() {
   
   NoteManager1.notes.shift();
   renderNote(NoteManager1.notes);
+  localStorage.setItem('NOTE_MENAGER', JSON.stringify(NoteManager1.notes));
 };
 //////////////////////видалення////////////////////////
 
@@ -94,5 +98,32 @@ function onDeleteFormSubmit(evt) {
   NoteManager1.deleteNoteByTitle(deleteTitle);
   renderNote(NoteManager1.notes);
   textForm.reset();
+  localStorage.setItem('NOTE_MENAGER', JSON.stringify(NoteManager1.notes));
 };
+
+notionForm.addEventListener('input', onNotionFormInput);
+
+function onNotionFormInput(evt) {
+  
+  let notionFormUser = {
+    noteTitle: notionForm.elements.noteTitle.value,
+    noteContent: notionForm.elements.noteContent.value,
+  }
+
+  localStorage.setItem('NOTION_USER', JSON.stringify(notionFormUser));
+}
+
+function onLoad() {
+
+   let notionUser = JSON.parse(localStorage.getItem('NOTION_USER'));
+  notionForm.elements.noteTitle.value = notionUser?.noteTitle || '';
+  notionForm.elements.noteContent.value = notionUser?.noteContent || '';
+  
+   let userList = JSON.parse(localStorage.getItem('NOTE_MENAGER'));
+  NoteManager1.notes = userList || [];
+  renderNote(NoteManager1.notes);
+
+};
+onLoad();
+
 ////////////////////////////////////////////////////////////////////

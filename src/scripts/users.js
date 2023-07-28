@@ -61,6 +61,8 @@ function onUserFormSubmit(evt) {
   Department1.addUser(content, text, email);
   renderUsers(Department1.users); 
   userForm.reset();
+  localStorage.removeItem('USER_INFO');
+  localStorage.setItem('USER_LIST', JSON.stringify(Department1.users));
 }
 
 const userList = document.querySelector('.js-list');
@@ -122,9 +124,9 @@ function onModalClose(evt) {
   }
 }
 const userInput = document.querySelector('.js-input');
-userInput.addEventListener('input', onInputChange);
+userInput.addEventListener('input', onFilterUser);
 
-function onInputChange(evt) {
+function onFilterUser(evt) {
   
   let userInputValue = userInput.value;
   let FilteredUsers = Department1.users.filter((el) => {
@@ -132,3 +134,27 @@ function onInputChange(evt) {
   })
   renderUsers(FilteredUsers);
 }
+
+userForm.addEventListener('input', onInputChange);
+
+function onInputChange(evt) {
+  let userInfo = {
+  userName: userForm.elements.username.value,
+  userEmail: userForm.elements.userEmail.value,
+  userRole: userForm.elements.userRole.value,
+  }
+  localStorage.setItem('USER_INFO', JSON.stringify(userInfo));
+
+};
+
+function onLoad() {
+  let userInfo = JSON.parse(localStorage.getItem('USER_INFO'));
+  userForm.elements.username.value = userInfo?.userName || '';
+  userForm.elements.userEmail.value = userInfo?.userEmail || '';
+  userForm.elements.userRole.value = userInfo?.userRole || '';
+
+  let userList = JSON.parse(localStorage.getItem('USER_LIST'));
+  Department1.users = userList || [];
+  renderUsers(Department1.users );
+};
+onLoad();
