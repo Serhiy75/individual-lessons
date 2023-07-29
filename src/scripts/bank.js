@@ -70,7 +70,10 @@ function onWithdrawClick(evt) {
 
 function onFormSubmit(evt) {
   evt.preventDefault();
-evt.target.reset()
+  evt.target.reset()
+  localStorage.removeItem('USER_BANK');
+  localStorage.setItem('bankAccount', JSON.stringify(bankAccount.transactions));
+  localStorage.setItem('USER_BALANCE', JSON.stringify(bankAccount.balance));
 }
 
 transactionsElem.addEventListener('click', onTransactionHistoryClick);
@@ -81,7 +84,56 @@ function onTransactionHistoryClick(evt) {
   return
   }
   evt.target.closest('li').remove();
-}
+};
+
+formElem.addEventListener('input', onFormInput);
+
+function onFormInput(evt) {
+  
+  let userBank = {
+    depositAmount: formElem.elements.depositAmount.value,
+    withdrawAmount: formElem.elements.withdrawAmount.value,
+  }
+  localStorage.setItem('USER_BANK', JSON.stringify(userBank));
+  
+};
+
+function onLoad() {
+  
+  let userBank = JSON.parse(localStorage.getItem('USER_BANK'));
+  formElem.elements.depositAmount.value = userBank?.depositAmount || '';
+  formElem.elements.withdrawAmount.value = userBank?.withdrawAmount || ''; 
+
+  let userHistory = JSON.parse(localStorage.getItem('bankAccount'));
+  let userBalans = JSON.parse(localStorage.getItem('USER_BALANCE'));
+  
+  bankAccount.balance = userBalans|| 0;
+  bankAccount.transactions = userHistory || [];
+  bankAccount.renderBalance();
+  bankAccount.renderTransactions();
+
+};
+onLoad();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Додати слухачі на кнопки щоб виконувалася відовідна транзакція
 
