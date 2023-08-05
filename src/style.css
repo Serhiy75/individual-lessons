@@ -10,3 +10,51 @@ form {
     width: fit-content;
 }
 form>*{margin: 3px;}
+.book-list{
+    border: 2px solid black;
+    width: 80vw;
+    display: flex;
+    flex-wrap: wrap;
+}
+body{
+    display: flex;
+}
+.book {
+    width: 300px;
+    height: 300px;
+    background: #f2f2f2;
+    overflow: hidden;
+    border-radius: 20px;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 20px 8px #d0d0d0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.book__desc {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.book__footer {
+    display: flex;
+    background-color: rgb(222, 222, 222);
+}
+
+body.quotes{
+    flex-direction: column;
+    align-items: center;
+    justify-content: start
+    
+    
+}
+
+
+body.quotes .book-list{
+    border: none;
+    width: 100%;
+    justify-content: center;
+}
