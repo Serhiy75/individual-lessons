@@ -1,108 +1,62 @@
-import {getPokemons, getUrlPokemons, } from './pokemonapi'
+
+
+import { getNews, } from './news-api.js';
 
 const refs = {
-  pokemonElem: document.querySelector('.js-pokemons-list'),
-  btnPrev: document.querySelector('.js-btn-prev'),
-  btnNext: document.querySelector('.js-btn-next'),
-  modalElem: document.querySelector('.modal'),
+  userForm: document.querySelector('.js-form'),
+  userInput: document.querySelector('.js-userValue'),
+  userList: document.querySelector('.js-news'),
+  box: document.querySelector('.js-box'),
 };
-refs.btnPrev.addEventListener('click', onClickBtn);
-refs.btnNext.addEventListener('click', onClickBtn);
-refs.pokemonElem.addEventListener('click', onListClick);
-refs.modalElem.addEventListener('click', onCloseModal);
 
-
-
-function onCloseModal(evt) {
-  if (evt.target === evt.currentTarget) {
-    closeModal()
-  }
-}
-
-function onClickBtn(evt) {
-  getUrlPokemons(evt.target.dataset.url).then((data) => {
-    console.log(data);
-      createMurkup(data.results);
-  refs.btnPrev.setAttribute('data-url', data.previous);
-  refs.btnNext.setAttribute('data-url', data.next);
-    refs.btnPrev.disabled = data.previous === null;
-  });
- 
+refs.userForm.addEventListener('submit', onUserFormSubmit);
+let userInput;
+function onUserFormSubmit(evt) {
+  evt.preventDefault();
+  userInput = refs.userForm.elements.userValueName.value;
+  getNews(userInput).then((news => {
+    console.log(news);
+    refs.userList.innerHTML = '';
+    renderMarkup(news.articles);
+    observer.observe(refs.box);
+    page = 1;
+  }))
+  
 };
-function onListClick(evt) {
-  if (evt.target === evt.currentTarget) {
-    return;
-  }
-  console.log(evt.target.dataset.url);
-  getUrlPokemons(evt.target.dataset.url).then(pokemon =>  createModalMurkup(pokemon))
 
-}
+function createMarkup({media, author, summary,title, published_date}) {
+  return `
+        <li class="card news-card">
+  <div class="news-image">
+    <img src="${media}" alt="${title}" />
+  </div>
 
+  <h3 class="card-title">${title}</h3>
+  <p class="card-desc">${summary}</p>
+  <div class="card-footer">
+    <span>${author}</span>
+    <span>${published_date}</span>
+  </div>
+</li>`
+};
 
+function renderMarkup(array) {
+  const markup = array.map(createMarkup).join('');
+  refs.userList.insertAdjacentHTML('beforeend', markup);
+};
 
-getPokemons().then((data) => {
-  console.log(data);
-  createMurkup(data.results);
-  refs.btnPrev.setAttribute('data-url', data.previous);
+let page = 1;
 
-  refs.btnNext.setAttribute('data-url', data.next);
-   refs.btnPrev.disabled = data.previous === null;
+const observer = new IntersectionObserver((array) => {
+  array.forEach((el) => {
+    if (el.isIntersecting === false) {
+      return
+    } else {
+      page += 1;
+      getNews(userInput, page).then((news) => {
+        renderMarkup(news.articles)
+      })
+    }
+  })
 })
-
-function createMurkup(pokemons) {
-  const murkup = pokemons.map(({name, url}) => {
-    return `
-    <li class="pokemon-item" data-url="${url}">name${name}</li>`
-  }).join('');
-  refs.pokemonElem.innerHTML = murkup;
-};
-
-function createModalMurkup({id, weight, height, name, base_experience, sprites:{front_default, back_default
-}, 
-}) {
-  const murkup = `<div class="modal-content">
-  <h1 class="pokemon-name">${name} - Pokemon Details</h1>
-  <img data-back="${back_default}" data-front="${front_default}"
-    class="pokemon-image js-pocimage"
-    src="${front_default}"
-    alt="${name}"
-  />
-
-  <h2 class="section-title">Basic Information</h2>
-  <ul class="info-list">
-    <li>ID: ${id}</li>
-    <li>Height: ${height} decimetres</li>
-    <li>Weight: ${weight} grams</li>
-    <li>Base Experience: ${base_experience}</li>
-  </ul>
-</div>`
-  refs.modalElem.innerHTML = murkup;
-  showModal()
-};
-
-function showModal() {
-  refs.modalElem.style.display = 'flex'
-  const imageElem = document.querySelector('.js-pocimage');
-  imageElem.addEventListener('mouseover', onImageOver);
-  imageElem.addEventListener('mouseout', onImageOut);
-};
-
-
-function closeModal() {
-   const imageElem = document.querySelector('.js-pocimage');
-  imageElem.removeEventListener('mouseover', onImageOver);
-  imageElem.removeEventListener('mouseout', onImageOut);
-  refs.modalElem.style.display = 'none'
-};
-
-function onImageOver(evt) { 
-  const url = evt.target.dataset.back;
-  evt.target.src = url
-};
-
-function onImageOut(evt) { 
-  const url = evt.target.dataset.front;
-  evt.target.src = url
-};
- 
 
