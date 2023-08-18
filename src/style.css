@@ -18,7 +18,7 @@ body {
 }
 
 .js-left {
-    width: 27vw;
+    width: 25vw;
     height: 80vh;
     display: flex;
     flex-direction: column;
@@ -27,7 +27,7 @@ body {
 }
 
 .js-right {
-    width: 70vw;
+    width: 50vw;
     max-height: 80vh;
     overflow-y: auto;
 }
@@ -38,6 +38,11 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.js-save-elem{
+    width: 25vw;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .js-formsearch>* {
