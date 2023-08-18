@@ -7,29 +7,28 @@ const token = '6564338368:AAHUnEL1WkAi0UKm-pYUU5v6bscD7MAGURw';
 const bot = new TelegramBot(token, { polling: true });
 
 const heroArray = new Map();
-const liked = new Map()
+const liked = new Map();
 
-bot.on('message', (msg) => {
-  if (msg.text[0] === '/')
-    return;
-    const data = msg.text.split(' ');
+bot.on('message', msg => {
+  if (msg.text[0] === '/') return;
+  const data = msg.text.split(' ');
   const url = `https://source.unsplash.com/${data[1] || 1000}x${
     data[2] || 800
   }/?random=0&${data[0]}`;
-  bot.sendPhoto(msg.from.id, url, { caption: 'обране фото',
-            reply_markup: {
-          inline_keyboard: [
-            [
-              {
-                text: 'delete',
-                callback_data: 'delete',
-              },
-            ],
-
-          ],
-        },
-  })
-})
+  bot.sendPhoto(msg.from.id, url, {
+    caption: 'обране фото',
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: 'delete',
+            callback_data: 'delete',
+          },
+        ],
+      ],
+    },
+  });
+});
 
 bot.onText(/\/hero/, msg => {
   const data = msg.text.split(' ');
@@ -41,17 +40,18 @@ bot.onText(/\/hero/, msg => {
         parse_mode: 'HTML',
         reply_markup: {
           inline_keyboard: [
-            [{
-              text: 'liked',
-              callback_data: `liked_${hero.id}`,
-            }],
+            [
+              {
+                text: 'liked',
+                callback_data: `liked_${hero.id}`,
+              },
+            ],
             [
               {
                 text: 'delete',
                 callback_data: 'delete',
               },
             ],
-
           ],
         },
       });
@@ -80,100 +80,103 @@ function heroTemplate({
    `;
 }
 bot.on('callback_query', query => {
-  
   switch (query.data.split('_')[0]) {
-    case 'delete': bot.deleteMessage(query.from.id, query.message.message_id); break;
-    case 'liked': onLike(query); break;
-    case 'remoove': onDislike(query); break;
+    case 'delete':
+      bot.deleteMessage(query.from.id, query.message.message_id);
+      break;
+    case 'liked':
+      onLike(query);
+      break;
+    case 'remoove':
+      onDislike(query);
+      break;
   }
-  
 });
 function onDislike(query) {
   const id = +query.data.split('_')[1];
-  liked.delete(id)
+  liked.delete(id);
   console.log(id);
 
-   bot.deleteMessage(query.from.id, query.message.message_id);
+  bot.deleteMessage(query.from.id, query.message.message_id);
 }
 
 function onLike(query) {
   const id = +query.data.split('_')[1];
   const hero = heroArray.get(id);
-  liked.set(id, hero)
+  liked.set(id, hero);
 }
 
-
-bot.onText(/\/get history/, (msg) => {
-  heroArray.forEach((hero) => {
-      const image = hero.images.lg;
-          bot.sendPhoto(msg.from.id, image, {
-        caption: heroTemplate(hero),
-        parse_mode: 'HTML',
-        reply_markup: {
-          inline_keyboard: [
-            [
-              {
-                text: 'delete',
-                callback_data: 'delete',
-              },
-            ],
+bot.onText(/\/get history/, msg => {
+  heroArray.forEach(hero => {
+    const image = hero.images.lg;
+    bot.sendPhoto(msg.from.id, image, {
+      caption: heroTemplate(hero),
+      parse_mode: 'HTML',
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'delete',
+              callback_data: 'delete',
+            },
           ],
-        },
-      });
-  })
-})
+        ],
+      },
+    });
+  });
+});
 
-bot.onText(/\/start/, (msg) => {
+bot.onText(/\/start/, msg => {
   bot.sendMessage(msg.from.id, 'hello', {
     reply_markup: {
-      keyboard: [['\/get random photo'],['\/get liked'], ['\/get history'] ]
-    }
-  })
+      keyboard: [['/get random photo'], ['/get liked'], ['/get history']],
+    },
+  });
 });
-bot.onText(/\/get random photo/, (msg) => {
-  const url = `https://source.unsplash.com/1000x900/?random=${Math.round(Math.random()*10000)}&tiger,moon,star,sun,sky,bear,bool,baby`;
-  bot.sendPhoto(msg.from.id, url, { caption: 'рандомне фото',
-            reply_markup: {
-          inline_keyboard: [
-            [
-              {
-                text: 'delete',
-                callback_data: 'delete',
-              },
-            ],
+bot.onText(/\/get random photo/, msg => {
+  const url = `https://source.unsplash.com/1000x900/?random=${Math.round(
+    Math.random() * 10000,
+  )}&tiger,moon,star,sun,sky,bear,bool,baby`;
+  bot.sendPhoto(msg.from.id, url, {
+    caption: 'рандомне фото',
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: 'delete',
+            callback_data: 'delete',
+          },
+        ],
+      ],
+    },
+  });
+});
 
+bot.onText(/\/get liked/, msg => {
+  liked.forEach(hero => {
+    const image = hero.images.lg;
+    bot.sendPhoto(msg.from.id, image, {
+      caption: heroTemplate(hero),
+      parse_mode: 'HTML',
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'remoove from liked',
+              callback_data: `remoove_${hero.id}`,
+            },
           ],
-        },
-  })
-})
-
-bot.onText(/\/get liked/, (msg) => {
-   liked.forEach((hero) => {
-      const image = hero.images.lg;
-          bot.sendPhoto(msg.from.id, image, {
-        caption: heroTemplate(hero),
-        parse_mode: 'HTML',
-        reply_markup: {
-          inline_keyboard: [
-            [
-              {
-                text: 'remoove from liked',
-                callback_data: `remoove_${hero.id}`,
-              },
-            ],
-            [
-              {
-                text: 'delete',
-                callback_data: 'delete',
-              },
-            ],
+          [
+            {
+              text: 'delete',
+              callback_data: 'delete',
+            },
           ],
-        },
-      });
-  })
-})
-
-
+        ],
+      },
+    });
+  });
+});
 
 // Superman
 //   Batman
