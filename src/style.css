@@ -19,7 +19,7 @@ body {
 
 .js-left {
     width: 27vw;
-    height: 80vh;
+    height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -28,7 +28,7 @@ body {
 
 .js-right {
     width: 70vw;
-    max-height: 80vh;
+    max-height: 90vh;
     overflow-y: auto;
 }
 
@@ -54,6 +54,7 @@ body {
     height: 100%;
     padding: 0;
     margin: 10px 0 0 0;
+    overflow-y: auto;
 }
 
 .js-list>li {

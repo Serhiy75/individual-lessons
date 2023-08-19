@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "name": "bob",
+      "email": "sso75@ukr.net",
+      "login": "ssogb",
+      "password": "123456",
+      "id": 1
+    }
+  ]
+}

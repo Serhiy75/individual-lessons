@@ -57,3 +57,24 @@ function renderMovie({banner, content_rating, release, description, trailer, tit
   refs.divRight.innerHTML = markup
 };
 
+
+
+
+
+
+const userLokalStoreg = JSON.parse(localStorage.getItem('user'));
+console.log(userLokalStoreg);
+if(userLokalStoreg){
+} else {
+  location.pathname = '/registration.html'
+}
+
+const btnLogout = document.querySelector('.js-logout');
+
+btnLogout.addEventListener('click', onBtnLogoutClic);
+
+function onBtnLogoutClic (evt){
+    localStorage.removeItem('user');
+    location.pathname = '/autorization.html';
+
+};
