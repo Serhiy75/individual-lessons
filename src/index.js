@@ -4,7 +4,7 @@ const refs = {
   searchForm: document.querySelector('.js-formsearch'),
   ulList: document.querySelector('.js-list'),
   divFood: document.querySelector('.js-right'),
-  ulLocalStor: document.querySelector('.js-save-elem')
+  ulLocalStor: document.querySelector('.js-save-elem'),
 };
 
 refs.searchForm.addEventListener('submit', onFormSubmit);
@@ -24,7 +24,6 @@ function onPizzaClick(evt) {
     refs.divFood.innerHTML = markup;
     const btnSave = document.querySelector('.js-button');
     btnSave.addEventListener('click', onBtnClick);
-    
   }
 }
 
@@ -41,8 +40,6 @@ function onFormSubmit(evt) {
   });
 }
 function renderPizza(array) {
-  // console.log(array);
-  // console.log(JSON.stringify(array[0]));
   const markup = array
     .map(el => {
       return `
@@ -78,37 +75,42 @@ function generateRecipeHTML(recipeData) {
           <!-- Add more nutritional information... -->
           
           <footer>
-          <button type="submit" class="js-button" data-label="${recipeData.label}">SAVE</button>
+          <button type="submit" class="js-button" data-label="${
+            recipeData.label
+          }">SAVE</button>
           </footer>
   `;
-};
+}
 
 let saveList = JSON.parse(localStorage.getItem('food')) || [];
 
-function onBtnClick (evt) {
-   const save = evt.target.dataset.label;
+function onBtnClick(evt) {
+  const save = evt.target.dataset.label;
   const obj = dataFood.find(el => {
-    return save === el.label
-  })
-  if(!saveList.find(el => {
-    return save === el.label
-  })){
+    return save === el.label;
+  });
+  if (
+    !saveList.find(el => {
+      return save === el.label;
+    })
+  ) {
     saveList.push(obj);
-  localStorage.setItem("food", JSON.stringify(saveList));
+    localStorage.setItem('food', JSON.stringify(saveList));
   }
-renderLikeList()
+  renderLikeList();
 }
 
-function renderLikeList () {
+function renderLikeList() {
   const markup = saveList
-  .map(el => {
-    return `
+    .map(el => {
+      return `
 <li data-label='${el.label}'>
 ${el.label}
 </li>`;
-  }).join('');
+    })
+    .join('');
   refs.ulLocalStor.innerHTML = markup;
 }
-renderLikeList()
+renderLikeList();
 
 refs.ulLocalStor.addEventListener('click', onPizzaClick);
