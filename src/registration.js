@@ -8,6 +8,7 @@ refs.registrationForm.addEventListener('submit', onRegistrFormSubmit);
 
 function onRegistrFormSubmit (evt) {
     evt.preventDefault();
+    location.pathname = '';
     const nameInput = evt.target.elements.name.value;
     const emailInput = evt.target.elements.email.value;
     const loginInput = evt.target.elements.login.value;

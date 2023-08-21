@@ -64,10 +64,10 @@ function renderMovie({banner, content_rating, release, description, trailer, tit
 
 const userLokalStoreg = JSON.parse(localStorage.getItem('user'));
 console.log(userLokalStoreg);
-if(userLokalStoreg){
-} else {
-  location.pathname = '/registration.html'
-}
+// if(userLokalStoreg){
+// } else {
+//   location.pathname = '/registration.html'
+// }
 
 const btnLogout = document.querySelector('.js-logout');
 

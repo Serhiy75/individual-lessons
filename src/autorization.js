@@ -11,6 +11,7 @@ refs.userFormLogin.addEventListener('submit', onUserFormLoginSubmit);
 
 function onUserFormLoginSubmit (evt) {
     evt.preventDefault();
+    location.pathname = '';
     const userLogin = evt.target.elements.login.value;
     const userPassword = evt.target.elements.password.value;
     checkUser(userLogin, userPassword).then(user => {
