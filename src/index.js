@@ -1,4 +1,4 @@
-import {getPokemons, getUrlPokemons, } from './pokemonapi'
+import { getPokemons, getUrlPokemons } from './pokemonapi';
 
 const refs = {
   pokemonElem: document.querySelector('.js-pokemons-list'),
@@ -11,54 +11,56 @@ refs.btnNext.addEventListener('click', onClickBtn);
 refs.pokemonElem.addEventListener('click', onListClick);
 refs.modalElem.addEventListener('click', onCloseModal);
 
-
-
 function onCloseModal(evt) {
   if (evt.target === evt.currentTarget) {
-    closeModal()
+    closeModal();
   }
 }
 
-function onClickBtn(evt) {
-  getUrlPokemons(evt.target.dataset.url).then((data) => {
-    console.log(data);
-      createMurkup(data.results);
+async function onClickBtn(evt) {
+  const data = await getUrlPokemons(evt.target.dataset.url);
+  console.log(data);
+  createMurkup(data.results);
   refs.btnPrev.setAttribute('data-url', data.previous);
   refs.btnNext.setAttribute('data-url', data.next);
-    refs.btnPrev.disabled = data.previous === null;
-  });
- 
-};
-function onListClick(evt) {
+  refs.btnPrev.disabled = data.previous === null;
+}
+async function onListClick(evt) {
   if (evt.target === evt.currentTarget) {
     return;
   }
   console.log(evt.target.dataset.url);
-  getUrlPokemons(evt.target.dataset.url).then(pokemon =>  createModalMurkup(pokemon))
-
+  // getUrlPokemons(evt.target.dataset.url).then(pokemon =>  createModalMurkup(pokemon))
+  const pokemon = await getUrlPokemons(evt.target.dataset.url);
+  createModalMurkup(pokemon);
 }
 
-
-
-getPokemons().then((data) => {
+getPokemons().then(data => {
   console.log(data);
   createMurkup(data.results);
   refs.btnPrev.setAttribute('data-url', data.previous);
 
   refs.btnNext.setAttribute('data-url', data.next);
-   refs.btnPrev.disabled = data.previous === null;
-})
+  refs.btnPrev.disabled = data.previous === null;
+});
 
 function createMurkup(pokemons) {
-  const murkup = pokemons.map(({name, url}) => {
-    return `
-    <li class="pokemon-item" data-url="${url}">name${name}</li>`
-  }).join('');
+  const murkup = pokemons
+    .map(({ name, url }) => {
+      return `
+    <li class="pokemon-item" data-url="${url}">name${name}</li>`;
+    })
+    .join('');
   refs.pokemonElem.innerHTML = murkup;
-};
+}
 
-function createModalMurkup({id, weight, height, name, base_experience, sprites:{front_default, back_default
-}, 
+function createModalMurkup({
+  id,
+  weight,
+  height,
+  name,
+  base_experience,
+  sprites: { front_default, back_default },
 }) {
   const murkup = `<div class="modal-content">
   <h1 class="pokemon-name">${name} - Pokemon Details</h1>
@@ -75,34 +77,31 @@ function createModalMurkup({id, weight, height, name, base_experience, sprites:{
     <li>Weight: ${weight} grams</li>
     <li>Base Experience: ${base_experience}</li>
   </ul>
-</div>`
+</div>`;
   refs.modalElem.innerHTML = murkup;
-  showModal()
-};
+  showModal();
+}
 
 function showModal() {
-  refs.modalElem.style.display = 'flex'
+  refs.modalElem.style.display = 'flex';
   const imageElem = document.querySelector('.js-pocimage');
   imageElem.addEventListener('mouseover', onImageOver);
   imageElem.addEventListener('mouseout', onImageOut);
-};
-
+}
 
 function closeModal() {
-   const imageElem = document.querySelector('.js-pocimage');
+  const imageElem = document.querySelector('.js-pocimage');
   imageElem.removeEventListener('mouseover', onImageOver);
   imageElem.removeEventListener('mouseout', onImageOut);
-  refs.modalElem.style.display = 'none'
-};
+  refs.modalElem.style.display = 'none';
+}
 
-function onImageOver(evt) { 
+function onImageOver(evt) {
   const url = evt.target.dataset.back;
-  evt.target.src = url
-};
+  evt.target.src = url;
+}
 
-function onImageOut(evt) { 
+function onImageOut(evt) {
   const url = evt.target.dataset.front;
-  evt.target.src = url
-};
- 
-
+  evt.target.src = url;
+}
