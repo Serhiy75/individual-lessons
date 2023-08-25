@@ -72,3 +72,19 @@ export async function deleteCars(id) {
   const res = await axios.delete(url);
   return res.data;
 }
+
+async function foo() {
+  const url = '';
+
+  try {
+    const res = await fetch(url);
+
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw new Error('error');
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
